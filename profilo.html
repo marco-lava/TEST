@@ -403,19 +403,21 @@
 
             .profile-tabs {
                 display: flex;
-                justify-content: flex-start;
-                padding-bottom: 8px;
-                /* For scrollbar */
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0.5rem;
+                padding-bottom: 0px;
                 width: 100%;
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
+                border-radius: 12px;
+                /* Less rounded since they might stack */
             }
 
             .profile-tabs button {
-                font-size: 0.9rem;
-                padding: 0.5rem 1rem;
-                flex: 0 0 auto;
-                /* Prevent buttons from shrinking */
+                font-size: 0.85rem;
+                padding: 0.6rem 1rem;
+                flex: 1 1 auto;
+                /* Allow buttons to grow and shrink smartly */
+                text-align: center;
             }
 
             /* Give avvisi header breathing room */
