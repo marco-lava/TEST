@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Tuscany Camp</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <style>
+        .dashboard-layout {
+            display: flex;
+            min-height: 100vh;
+            padding-top: var(--nav-height);
+        }
+
+        .sidebar {
+            width: 280px;
+            background: var(--bg-surface);
+            border-right: 1px solid var(--border-glass);
+            padding: 2rem;
+        }
+
+        .sidebar-brand {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-glass);
+        }
+
+        .sidebar-brand h3 {
+            color: #e74c3c;
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .sidebar-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .sidebar-menu a {
+            padding: 1rem;
+            border-radius: 8px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: var(--transition-fast);
+        }
+
+        .sidebar-menu a:hover,
+        .sidebar-menu a.active {
+            background: rgba(231, 76, 60, 0.1);
+            color: #e74c3c;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            padding: 3rem;
+            background: var(--bg-darker);
+            overflow-y: auto;
+        }
+
+        .card-panel {
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Tables */
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .admin-table th {
+            text-align: left;
+            padding: 1rem;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-glass);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+        }
+
+        .admin-table td {
+            padding: 1.2rem 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-light);
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-glass);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-card h4 {
+            font-size: 2.5rem;
+            font-family: var(--font-heading);
+            color: var(--accent-gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card p {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
+        /* Action Buttons */
+        .btn-action {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.8rem;
+            background: var(--bg-dark);
+            color: var(--text-light);
+            border: 1px solid var(--border-glass);
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn-action:hover {
+            border-color: var(--accent-gold);
+        }
+
+        .btn-print {
+            background: #3498db;
+            color: white;
+            border: none;
+        }
+
+        .btn-print:hover {
+            background: #2980b9;
+        }
+
+        /* Alert Notification */
+        .alert-box {
+            background: rgba(231, 76, 60, 0.1);
+            border: 1px solid #e74c3c;
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+
+        .alert-box p {
+            color: #e74c3c;
+            font-size: 0.95rem;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-select,
+        .form-input {
+            width: 100%;
+            padding: 0.8rem;
+            background: var(--bg-dark);
+            border: 1px solid var(--border-glass);
+            color: var(--text-light);
+            border-radius: 4px;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 900px) {
+            .dashboard-layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid var(--border-glass);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .sidebar-brand {
+                margin: 0;
+                padding: 0;
+                border: none;
+                text-align: left;
+            }
+
+            .sidebar-menu {
+                display: none;
+            }
+
+            /* Simplified for mobile mock */
+            .main-content {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar scrolled" style="border-bottom: 1px solid #e74c3c;">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <span class="logo-text">Tuscany Camp <sub
+                        style="color:#e74c3c; font-size: 0.8rem; font-family: var(--font-body);">BACK
+                        OFFICE</sub></span>
+            </a>
+            <div class="nav-links">
+                <span style="color: var(--text-muted); font-size:0.9rem;">Accesso Amministratore</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard -->
+    <div class="dashboard-layout">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <h3>Admin Panel</h3>
+            </div>
+            <div class="sidebar-menu">
+                <a href="admin.html"><ion-icon name="pie-chart-outline"></ion-icon> Panoramica</a>
+                <a href="admin-orari.html"><ion-icon name="calendar-outline"></ion-icon> Gestione Orari & Group</a>
+                <a href="admin-clienti.html" class="active"><ion-icon name="people-outline"></ion-icon> Rendiconto
+                    Clienti</a>
+                <a href="admin-insegnanti.html"><ion-icon name="cash-outline"></ion-icon> Compensi & Piani Lavoro</a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+
+
+            <!-- Rendiconto Coppie / Clienti -->
+            <section id="rendiconto-clienti" class="card-panel fade-in-up delay-2">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <h2 style="font-family: var(--font-heading); color: #e74c3c; font-size: 1.8rem;">Lista Coppie
+                        (Rendicontazione)</h2>
+                    <button class="btn btn-outline"
+                        style="border-color: #3498db; color: #3498db; padding: 0.5rem 1rem;">Esporta CSV</button>
+                </div>
+                <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Lista in ordine alfabetico dei partecipanti
+                    e relativo ammontare totale dovuto (Pacchetto + Extra + Lezioni).</p>
+
+                <div style="overflow-x: auto;">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Nome (Coppia/Singolo)</th>
+                                <th>Pacchetto</th>
+                                <th>N. Lezioni Booked</th>
+                                <th>Totale Dovuto</th>
+                                <th>Stato Pagamento</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><ion-icon name="person-outline"></ion-icon> Bianchi Giulia & Rossi Mario</td>
+                                <td>Premium Pass (2N)</td>
+                                <td>3</td>
+                                <td>€ 1.250,00</td>
+                                <td><span style="color: #2ecc71;">Saldato C.C.</span></td>
+                            </tr>
+                            <tr>
+                                <td><ion-icon name="person-outline"></ion-icon> Esposito Carlo</td>
+                                <td>Standard Pass</td>
+                                <td>1</td>
+                                <td>€ 350,00</td>
+                                <td><span style="color: #e67e22;">Solo Acconto</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+
+
+        </main>
+    </div>
+
+</body>
+
+</html>

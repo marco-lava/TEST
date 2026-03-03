@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accedi - Tuscany Camp 2026</title>
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <!-- Ionicons -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Specific Login Page Styles */
+        body {
+            background-image: linear-gradient(rgba(10, 10, 12, 0.8), rgba(10, 10, 12, 0.95)), url('https://images.unsplash.com/photo-1547153760-18fc86324498?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .login-container {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            margin-top: 80px;
+            /* Offset for navbar */
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            width: 100%;
+            padding: 1rem;
+            background: white;
+            color: #333;
+            border-radius: 8px;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+            font-family: var(--font-body);
+            font-weight: 500;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+        }
+
+        .social-btn img {
+            width: 24px;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid var(--border-glass);
+            margin: 0 1rem;
+        }
+    </style>
+</head>
+
+<body class="bg-darker">
+
+    <!-- Dynamic Navbar -->
+    <div id="nav-container"></div>
+
+    <div class="login-container">
+        <div class="auth-box fade-in-up">
+            <h2 class="title" style="font-size: 2rem; margin-bottom: 1rem;">Accedi al Profilo</h2>
+            <p style="color: var(--text-muted); margin-bottom: 2rem;">Gestisci pagamenti, prenotazioni e dati.</p>
+
+            <button class="social-btn" onclick="performLogin('Google User')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+                    alt="Google Logo">
+                Accedi con Google
+            </button>
+
+            <div class="divider">oppure email</div>
+
+            <input type="email" class="form-input" placeholder="La tua Email" id="loginEmail"
+                style="margin-bottom: 1rem;">
+            <input type="password" class="form-input" placeholder="Password" style="margin-bottom: 1.5rem;">
+
+            <button class="btn btn-primary w-100" onclick="performLogin(document.getElementById('loginEmail').value)">
+                Accedi
+            </button>
+
+            <p style="margin-top: 1.5rem; font-size: 0.9rem; color: var(--text-muted);">Non hai un account? <a
+                    href="booking.html" style="color: var(--accent-gold);">Prenota ora</a></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        function performLogin(identifier) {
+            if (!identifier) identifier = "Mario Rossi";
+
+            // For now, simulate storing the session/user name
+            localStorage.setItem('tc_user', identifier);
+
+            // Redirect to Profile page after successful login
+            window.location.href = 'profilo.html';
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profilo - Tuscany Camp</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <style>
+        .profile-layout {
+            padding-top: 120px;
+            min-height: 100vh;
+            padding-bottom: 4rem;
+        }
+
+        .profile-header {
+            background: var(--bg-surface);
+            border-radius: 16px;
+            border: 1px solid var(--border-glass);
+            padding: 3rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-light));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3rem;
+            color: var(--bg-darker);
+            font-family: var(--font-heading);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .profile-info h1 {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            color: var(--text-light);
+        }
+
+        .profile-info p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+        }
+
+        .profile-sidebar {
+            background: var(--bg-surface);
+            border-radius: 16px;
+            border: 1px solid var(--border-glass);
+            padding: 2rem;
+        }
+
+        .info-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .info-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        .info-value {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 0.5rem;
+        }
+
+        .profile-main {
+            background: var(--bg-surface);
+            border-radius: 16px;
+            border: 1px solid var(--border-glass);
+            padding: 2rem;
+        }
+
+        .history-card {
+            border: 1px solid var(--border-glass);
+            background: var(--bg-dark);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition-fast);
+        }
+
+        .history-card:hover {
+            border-color: var(--accent-gold);
+        }
+
+        .payment-status {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .payment-status.active {
+            background: rgba(46, 204, 113, 0.2);
+            color: #2ecc71;
+        }
+
+        .payment-status.past {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+        }
+
+        /* Profile Booking Table */
+        .booking-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .booking-table th {
+            text-align: left;
+            padding: 1rem;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-glass);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+        }
+
+        .booking-table td {
+            padding: 1.2rem 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-light);
+        }
+
+        /* Profile Edit Form Styles */
+        .edit-input {
+            display: none;
+            width: 100%;
+            padding: 0.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--accent-gold);
+            color: var(--text-light);
+            border-radius: 4px;
+            font-size: 1rem;
+            margin-top: 0.2rem;
+        }
+
+        .edit-mode .edit-input {
+            display: block;
+        }
+
+        .edit-mode .view-text {
+            display: none;
+        }
+
+        .profile-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+        }
+
+        .btn-save {
+            background-color: transparent;
+            color: #2ecc71;
+            border: 1px solid #2ecc71;
+        }
+
+        .btn-save:hover {
+            background-color: rgba(46, 204, 113, 0.1);
+            color: #2ecc71;
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.2);
+        }
+
+        .btn-cancel {
+            background-color: transparent;
+            color: #e74c3c;
+            border: 1px solid #e74c3c;
+        }
+
+        .btn-cancel:hover {
+            background-color: rgba(231, 76, 60, 0.1);
+            color: #e74c3c;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.2);
+        }
+
+        /* Notifications Styles */
+        .notification-item {
+            padding: 1.5rem;
+            border-left: 4px solid var(--accent-gold);
+            background: rgba(255, 255, 255, 0.04);
+            margin-bottom: 1.5rem;
+            border-radius: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 1.2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .notification-item:hover {
+            transform: translateX(5px);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .notification-item.urgent {
+            border-left-color: #e74c3c;
+            background: rgba(231, 76, 60, 0.05);
+        }
+
+        .notification-icon {
+            color: var(--accent-gold);
+            font-size: 1.8rem;
+        }
+
+        .notification-item.urgent .notification-icon {
+            color: #e74c3c;
+        }
+
+        /* Profile Tabs - Modern Design */
+        .profile-tabs {
+            display: inline-flex;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50px;
+            padding: 0.4rem;
+            gap: 0.5rem;
+            overflow-x: auto;
+            white-space: nowrap;
+            border: 1px solid var(--border-glass);
+            /* Optional: box-shadow for depth */
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .profile-tabs button {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-family: var(--font-heading);
+            font-size: 1rem;
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .profile-tabs button:hover {
+            color: var(--text-light);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .profile-tabs button.active {
+            background: var(--accent-gold);
+            color: var(--bg-dark);
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeInUp 0.4s ease forwards;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Custom Dropdown Styles */
+        .custom-select {
+            position: relative;
+            font-family: var(--font-body);
+            width: 250px;
+            z-index: 100;
+        }
+
+        .select-selected {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-light);
+            padding: 0.6rem 1.2rem;
+            border: 1px solid var(--border-glass);
+            border-radius: 50px;
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .select-selected:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .select-selected.select-arrow-active {
+            border-radius: 20px 20px 0 0;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .select-items {
+            position: absolute;
+            background-color: var(--bg-dark);
+            border: 1px solid var(--border-glass);
+            top: 100%;
+            left: 0;
+            right: 0;
+            z-index: 999;
+            border-radius: 0 0 20px 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            opacity: 0;
+            pointer-events: none;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(-10px);
+        }
+
+        .select-items.show {
+            opacity: 1;
+            pointer-events: auto;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .select-items div {
+            color: var(--text-muted);
+            padding: 0.8rem 1.2rem;
+            cursor: pointer;
+            user-select: none;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        .select-items div:last-child {
+            border-bottom: none;
+        }
+
+        .select-items div:hover,
+        .same-as-selected {
+            background-color: rgba(212, 175, 55, 0.1);
+            color: var(--accent-gold);
+        }
+
+        .select-hide {
+            opacity: 0 !important;
+            pointer-events: none !important;
+            visibility: hidden !important;
+        }
+
+        @media (max-width: 768px) {
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-darker">
+
+    <!-- Digital Pass Modal -->
+    <div class="auth-overlay" id="passModal" onclick="hidePassModal()" style="display: none;">
+        <div class="auth-box fade-in-up" onclick="event.stopPropagation()"
+            style="max-width: 350px; width: 100%; margin: auto; text-align: center; position: relative; padding: 2.5rem 1.5rem; border: 1px solid rgba(212, 175, 55, 0.3); box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
+            <button onclick="hidePassModal()"
+                style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer;">
+                <ion-icon name="close-outline"></ion-icon>
+            </button>
+            <h2 class="title" style="font-size: 1.6rem; margin-bottom: 0.5rem; color: var(--accent-gold);">Pass
+                Elettronico</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.9rem;">Mostra questo QR Code alla
+                reception.</p>
+
+            <div class="qr-box"
+                style="background: white; padding: 1rem; border-radius: 12px; display: inline-block; margin-bottom: 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                <!-- Placeholder QR Code using a generic API/Image for demo -->
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=Ticket-TC2026-MarioRossi"
+                    alt="QR Code Access" style="display: block; max-width: 100%; height: auto;">
+            </div>
+
+            <h4
+                style="font-family: monospace; letter-spacing: 2px; color: var(--text-light); font-size: 1.2rem; margin-bottom: 0.5rem;">
+                TC-2026-MR849</h4>
+            <span class="payment-status active" style="font-size: 0.9rem;">Pass Valido</span>
+        </div>
+    </div>
+
+    <!-- Dynamic Navbar -->
+    <div id="nav-container"></div>
+
+    <!-- Profile Content -->
+    <div class="container profile-layout">
+
+        <div class="profile-header fade-in-up">
+            <div class="profile-avatar" id="avatarDisplay">M</div>
+            <div class="profile-info">
+                <h1 id="userNameDisplay">Mario Rossi</h1>
+                <p>Membro dal 2026</p>
+            </div>
+            <div style="margin-left: auto; display: flex; gap: 1rem;">
+                <button class="btn btn-primary" onclick="showPassModal()">
+                    <ion-icon name="qr-code-outline" style="vertical-align: middle; margin-right: 0.3rem;"></ion-icon>
+                    Pass
+                </button>
+                <button class="btn btn-outline"
+                    onclick="localStorage.removeItem('tc_user'); window.location.href='login.html';">Logout</button>
+            </div>
+        </div>
+
+        <div class="profile-grid">
+            <!-- Sidebar Info -->
+            <div class="profile-sidebar fade-in-up delay-1" id="profileDataSection">
+                <h3
+                    style="font-family: var(--font-heading); color: var(--accent-gold); margin-bottom: 2rem; font-size: 1.5rem;">
+                    I Tuoi Dati</h3>
+
+                <div class="info-group">
+                    <span class="info-label">Nome</span>
+                    <div class="info-value">
+                        <span class="view-text" id="viewName">Mario</span>
+                        <input type="text" class="edit-input" id="editName" value="Mario">
+                    </div>
+                </div>
+
+                <div class="info-group">
+                    <span class="info-label">Cognome</span>
+                    <div class="info-value">
+                        <span class="view-text" id="viewSurname">Rossi</span>
+                        <input type="text" class="edit-input" id="editSurname" value="Rossi">
+                    </div>
+                </div>
+
+                <div class="info-group">
+                    <span class="info-label">Data di Nascita</span>
+                    <div class="info-value">
+                        <span class="view-text" id="viewDob">15/05/1990</span>
+                        <input type="date" class="edit-input" id="editDob" value="1990-05-15">
+                    </div>
+                </div>
+
+                <div class="info-group">
+                    <span class="info-label">Email</span>
+                    <div class="info-value">
+                        <span class="view-text" id="viewEmail">mario.rossi@email.com</span>
+                        <input type="email" class="edit-input" id="editEmail" value="mario.rossi@email.com">
+                    </div>
+                </div>
+
+                <div id="actionButtons" style="margin-top: 2rem;">
+                    <button class="btn btn-secondary w-100" style="font-size: 0.8rem;" id="btnModify"
+                        onclick="toggleEditMode()">Modifica Dati</button>
+
+                    <div class="profile-actions" id="editActions" style="display: none;">
+                        <button class="btn btn-cancel" style="font-size: 0.8rem; flex: 1; margin-right: 0.5rem;"
+                            onclick="cancelEdit()"><ion-icon name="close-outline"
+                                style="vertical-align: middle;"></ion-icon> Annulla</button>
+                        <button class="btn btn-save" style="font-size: 0.8rem; flex: 1; margin-left: 0.5rem;"
+                            onclick="saveProfileData()"><ion-icon name="checkmark-outline"
+                                style="vertical-align: middle;"></ion-icon> Salva</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main History -->
+            <div class="profile-main fade-in-up delay-2">
+
+                <!-- Tabs Navigation -->
+                <div style="text-align: center; width: 100%; margin-bottom: 2rem;">
+                    <div class="profile-tabs">
+                        <button class="active" onclick="switchProfileTab('avvisi', this)">Avvisi</button>
+                        <button onclick="switchProfileTab('prenotazioni', this)">Le Mie Prenotazioni</button>
+                        <button onclick="switchProfileTab('pagamenti', this)">Storico Pagamenti</button>
+                    </div>
+                </div>
+
+                <!-- Tab: Avvisi Personali -->
+                <div id="tab-avvisi" class="tab-content active">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+                        <h3
+                            style="font-family: var(--font-heading); color: var(--accent-gold); font-size: 1.5rem; margin: 0;">
+                            Avvisi Personali
+                        </h3>
+
+                        <!-- Custom Select -->
+                        <div class="custom-select" id="customAvvisiFilter">
+                            <div class="select-selected" id="avvisiCurrentSelect">
+                                <span>Ordina per: Più Recenti</span>
+                                <ion-icon name="chevron-down-outline"></ion-icon>
+                            </div>
+                            <div class="select-items" id="avvisiOptions">
+                                <div data-value="all" class="same-as-selected">Ordina per: Più Recenti</div>
+                                <div data-value="info">Solo Notifiche (Gialle)</div>
+                                <div data-value="urgent">Solo Avvisi Urgenti (Rossi)</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="notification-item" data-type="info">
+                        <div class="notification-icon"><ion-icon name="information-circle"></ion-icon></div>
+                        <div>
+                            <h4 style="font-size: 1rem; margin-bottom: 0.2rem; color: var(--text-light);">Benvenuto al
+                                Tuscany Camp 2026</h4>
+                            <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.4;">Ricordati di
+                                completare il tuo profilo con le informazioni richieste. La registrazione aprirà alle
+                                ore 09:00 il primo giorno dell'evento.</p>
+                            <span
+                                style="font-size: 0.75rem; color: var(--accent-gold); margin-top: 0.5rem; display: block;">1
+                                Giorno fa</span>
+                        </div>
+                    </div>
+
+                    <div class="notification-item urgent" data-type="urgent">
+                        <div class="notification-icon"><ion-icon name="alert-circle"></ion-icon></div>
+                        <div>
+                            <h4 style="font-size: 1rem; margin-bottom: 0.2rem; color: var(--text-light);">Cambio Sala
+                                Lezione</h4>
+                            <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.4;">La tua lezione
+                                delle 14:00 con Riccardo Cocchi è stata spostata dalla Sala A alla Sala B.</p>
+                            <span style="font-size: 0.75rem; color: #e74c3c; margin-top: 0.5rem; display: block;">2 Ore
+                                fa</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab: Mie Prenotazioni -->
+                <div id="tab-prenotazioni" class="tab-content">
+                    <h3
+                        style="font-family: var(--font-heading); color: var(--accent-gold); margin-bottom: 1.5rem; font-size: 1.5rem;">
+                        Le Mie Prenotazioni</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Registro ufficiale delle tue
+                        prenotazioni per lezioni private.</p>
+
+                    <div style="overflow-x: auto;">
+                        <table class="booking-table">
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Orario</th>
+                                    <th>Insegnante</th>
+                                    <th>Costo</th>
+                                    <th>Stato</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>15 Lug 2026</td>
+                                    <td>09:00 - 09:45</td>
+                                    <td>Riccardo Cocchi</td>
+                                    <td>€ 150,00</td>
+                                    <td><span class="payment-status active">Confermata</span></td>
+                                </tr>
+                                <tr>
+                                    <td>16 Lug 2026</td>
+                                    <td>11:00 - 11:45</td>
+                                    <td>Mia Michaels</td>
+                                    <td>€ 120,00</td>
+                                    <td><span class="payment-status active">Confermata</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="mt-3 text-center">
+                        <a href="booking.html" class="btn btn-outline" style="font-size: 0.9rem;">Prenota Nuova
+                            Lezione</a>
+                    </div>
+                </div>
+
+                <!-- Tab: Storico Pagamenti -->
+                <div id="tab-pagamenti" class="tab-content">
+                    <h3
+                        style="font-family: var(--font-heading); color: var(--accent-gold); margin-bottom: 2rem; font-size: 1.5rem;">
+                        Storico Pagamenti</h3>
+
+                    <!-- Active Payment -->
+                    <div class="history-card">
+                        <div>
+                            <h4 style="font-size: 1.2rem; margin-bottom: 0.3rem;">Workshop 2026 - Premium Pass + 2 Notti
+                            </h4>
+                            <p style="color: var(--text-muted); font-size: 0.9rem;">Acquistato il 15 Feb 2026 tramite
+                                Stripe
+                            </p>
+                        </div>
+                        <div style="text-align: right;">
+                            <div
+                                style="font-family: var(--font-heading); font-size: 1.5rem; color: var(--text-light); margin-bottom: 0.3rem;">
+                                € 610,00</div>
+                            <span class="payment-status active">Attivo</span>
+                        </div>
+                    </div>
+
+                    <!-- Past Payment -->
+                    <div class="history-card">
+                        <div>
+                            <h4 style="font-size: 1.2rem; margin-bottom: 0.3rem;">Workshop 2025 - Standard Pass</h4>
+                            <p style="color: var(--text-muted); font-size: 0.9rem;">Acquistato il 10 Mag 2025 tramite
+                                Stripe
+                            </p>
+                        </div>
+                        <div style="text-align: right;">
+                            <div
+                                style="font-family: var(--font-heading); font-size: 1.5rem; color: var(--text-light); margin-bottom: 0.3rem;">
+                                € 250,00</div>
+                            <span class="payment-status past">Completato</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Modal Logic
+        function showPassModal() {
+            document.getElementById('passModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function hidePassModal() {
+            document.getElementById('passModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Custom Select Logic
+        document.addEventListener('DOMContentLoaded', function () {
+            const selectedBox = document.getElementById('avvisiCurrentSelect');
+            if (selectedBox) {
+                const optionsBox = document.getElementById('avvisiOptions');
+                const options = optionsBox.querySelectorAll('div');
+
+                // Toggle dropdown
+                selectedBox.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    this.classList.toggle('select-arrow-active');
+                    optionsBox.classList.toggle('show');
+
+                    // Change icon
+                    const icon = this.querySelector('ion-icon');
+                    if (this.classList.contains('select-arrow-active')) {
+                        icon.setAttribute('name', 'chevron-up-outline');
+                    } else {
+                        icon.setAttribute('name', 'chevron-down-outline');
+                    }
+                });
+
+                // Option click
+                options.forEach(option => {
+                    option.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        e.preventDefault(); // Stop bubbling completely
+
+                        // Update selected text
+                        selectedBox.querySelector('span').innerHTML = this.innerHTML;
+
+                        // Update active class
+                        options.forEach(opt => opt.classList.remove('same-as-selected'));
+                        this.classList.add('same-as-selected');
+
+                        // Close dropdown immediately
+                        selectedBox.classList.remove('select-arrow-active');
+                        optionsBox.classList.remove('show');
+                        selectedBox.querySelector('ion-icon').setAttribute('name', 'chevron-down-outline');
+
+                        // Trigger actual filter function
+                        filterAvvisiCustom(this.getAttribute('data-value'));
+                    });
+                });
+
+                // Close when clicking outside
+                document.addEventListener('click', function (e) {
+                    // Prevent closing if we clicked inside the wrapper
+                    if (!document.getElementById('customAvvisiFilter').contains(e.target)) {
+                        selectedBox.classList.remove('select-arrow-active');
+                        optionsBox.classList.remove('show');
+                        selectedBox.querySelector('ion-icon').setAttribute('name', 'chevron-down-outline');
+                    }
+                });
+            }
+        });
+
+        // Notifications Filter Logic
+        function filterAvvisiCustom(filterValue) {
+            const notifications = document.querySelectorAll('.notification-item');
+
+            notifications.forEach(notification => {
+                const type = notification.getAttribute('data-type');
+                if (filterValue === 'all') {
+                    notification.style.display = 'flex';
+                } else if (filterValue === type) {
+                    notification.style.display = 'flex';
+                } else {
+                    notification.style.display = 'none';
+                }
+            });
+        }
+
+        // Tab Profile Logic
+        function switchProfileTab(tabId, btnElement) {
+            // Hide all contents
+            document.querySelectorAll('.tab-content').forEach(el => {
+                el.classList.remove('active');
+            });
+            // Remove active from all buttons
+            document.querySelectorAll('.profile-tabs button').forEach(el => {
+                el.classList.remove('active');
+            });
+
+            // Show new content
+            document.getElementById(`tab-${tabId}`).classList.add('active');
+            // Make button active
+            btnElement.classList.add('active');
+        }
+
+        // Data Editing Logic
+        const profileSection = document.getElementById('profileDataSection');
+        const btnModify = document.getElementById('btnModify');
+        const editActions = document.getElementById('editActions');
+
+        // DOM Elements for View
+        const viewName = document.getElementById('viewName');
+        const viewSurname = document.getElementById('viewSurname');
+        const viewDob = document.getElementById('viewDob');
+        const viewEmail = document.getElementById('viewEmail');
+
+        // DOM Elements for Edit
+        const editName = document.getElementById('editName');
+        const editSurname = document.getElementById('editSurname');
+        const editDob = document.getElementById('editDob');
+        const editEmail = document.getElementById('editEmail');
+
+        function toggleEditMode() {
+            profileSection.classList.add('edit-mode');
+            btnModify.style.display = 'none';
+            editActions.style.display = 'flex';
+        }
+
+        function cancelEdit() {
+            profileSection.classList.remove('edit-mode');
+            btnModify.style.display = 'block';
+            editActions.style.display = 'none';
+
+            // Reset inputs to current saved values
+            editName.value = viewName.innerText;
+            editSurname.value = viewSurname.innerText;
+
+            // Handle date reset
+            const dobParts = viewDob.innerText.split('/');
+            if (dobParts.length === 3) {
+                editDob.value = `${dobParts[2]}-${dobParts[1]}-${dobParts[0]}`;
+            }
+
+            editEmail.value = viewEmail.innerText;
+        }
+
+        function saveProfileData() {
+            // Validate minimal data
+            if (!editName.value || !editSurname.value || !editEmail.value) {
+                alert("Compila i campi richiesti.");
+                return;
+            }
+
+            // Update View text
+            viewName.innerText = editName.value;
+            viewSurname.innerText = editSurname.value;
+
+            // Format date for display (YYYY-MM-DD to DD/MM/YYYY)
+            if (editDob.value) {
+                const dateParts = editDob.value.split('-');
+                viewDob.innerText = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
+            }
+
+            viewEmail.innerText = editEmail.value;
+
+            // Also update master displays
+            document.getElementById('userNameDisplay').innerText = `${editName.value} ${editSurname.value}`;
+
+            // Exit edit mode
+            cancelEdit();
+
+            // Notify user
+            alert("Dati aggiornati con successo!");
+        }
+
+        // Check authentication on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = localStorage.getItem('tc_user');
+            if (user) {
+                // Populate profile data
+                const firstLetter = user.charAt(0).toUpperCase();
+                document.getElementById('avatarDisplay').innerText = firstLetter;
+
+                if (user.includes('@')) {
+                    viewEmail.innerText = user;
+                    editEmail.value = user;
+                    const parts = user.split('@')[0].split('.');
+                    viewName.innerText = parts[0] ? parts[0].charAt(0).toUpperCase() + parts[0].slice(1) : 'Utente';
+                    if (parts.length > 1) {
+                        viewSurname.innerText = parts[1] ? parts[1].charAt(0).toUpperCase() + parts[1].slice(1) : '';
+                    } else {
+                        viewSurname.innerText = 'Tuscany';
+                    }
+                } else {
+                    const parts = user.split(' ');
+                    viewName.innerText = parts[0];
+                    editName.value = parts[0];
+                    if (parts.length > 1) {
+                        viewSurname.innerText = parts.slice(1).join(' ');
+                        editSurname.value = parts.slice(1).join(' ');
+                    }
+                }
+
+                editName.value = viewName.innerText;
+                editSurname.value = viewSurname.innerText;
+                document.getElementById('userNameDisplay').innerText = `${viewName.innerText} ${viewSurname.innerText}`;
+            } else {
+                // Redirect if not logged in
+                window.location.href = 'login.html';
+            }
+        });
+    </script>
+</body>
+
+</html>

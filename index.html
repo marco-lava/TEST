@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tuscany Camp - Premium Dance Experience</title>
+    <meta name="description"
+        content="Tuscany Camp: The ultimate dance workshop experience in Italy. Book your exclusive lessons and packages today.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Ionicons for Icons -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+
+<body>
+
+    <!-- Dynamic Navbar Container -->
+    <div id="nav-container"></div>
+
+
+
+    <!-- Hero Section -->
+    <header class="hero" id="home">
+        <!-- Background Overlay for elegance -->
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content">
+            <p class="subtitle fade-in-up">The Ultimate Dance Experience</p>
+            <h1 class="title fade-in-up delay-1">Tuscany Camp<br>Workshop 2026</h1>
+
+            <!-- Countdown Timer -->
+            <div class="countdown-container fade-in-up delay-2">
+                <p class="countdown-label">L'evento inizia tra:</p>
+                <div class="countdown" id="countdown">
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="days">00</span>
+                        <span class="countdown-text">Giorni</span>
+                    </div>
+                    <div class="countdown-separator">:</div>
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="hours">00</span>
+                        <span class="countdown-text">Ore</span>
+                    </div>
+                    <div class="countdown-separator">:</div>
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="minutes">00</span>
+                        <span class="countdown-text">Minuti</span>
+                    </div>
+                    <div class="countdown-separator">:</div>
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="seconds">00</span>
+                        <span class="countdown-text">Secondi</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="hero-actions fade-in-up delay-3">
+                <a href="programma.html" class="btn btn-primary">
+                    <ion-icon name="calendar-outline"></ion-icon>
+                    Scopri il Programma
+                </a>
+                <a href="packages.html" class="btn btn-secondary">
+                    <ion-icon name="pricetag-outline"></ion-icon>
+                    Vedi i Pacchetti
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Programma Section -->
+    <section id="programma" class="section bg-dark">
+        <div class="container section-header text-center">
+            <p class="subtitle fade-in-up">The Schedule</p>
+            <h2 class="title fade-in-up delay-1">Programma dell'Evento</h2>
+            <p class="section-desc fade-in-up delay-2">Scopri gli orari dei workshop, lezioni private e group lessons.
+                Clicca sul pulsante qui sotto per scaricare il programma completo in PDF (in aggiornamento continuo).
+            </p>
+
+            <div class="fade-in-up delay-3 mt-3">
+                <a href="#" class="btn btn-outline" style="font-size: 1.1rem; padding: 1rem 2.5rem;">
+                    <ion-icon name="document-text-outline"></ion-icon>
+                    Scarica Schedule (PDF)
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Guest Teachers Section -->
+    <section id="teachers" class="section bg-darker">
+        <div class="container">
+            <div class="section-header text-center">
+                <p class="subtitle">Discipline & Maestri</p>
+                <h2 class="title">I Nostri Guest Teachers</h2>
+                <p class="section-desc">I migliori professionisti internazionali pronti a trasmetterti la loro arte,
+                    divisi per disciplina.</p>
+            </div>
+
+            <div class="teacher-grid">
+                <!-- Teacher Card 1 -->
+                <div class="teacher-card">
+                    <div class="teacher-img">
+                        <img src="https://images.unsplash.com/photo-1547153760-18fc86324498?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                            alt="Teacher">
+                    </div>
+                    <div class="teacher-info">
+                        <span class="teacher-style">Standard</span>
+                        <h3>Riccardo Cocchi</h3>
+                        <p>Pluricampione del mondo, specialista in danze standard internazionali.</p>
+                    </div>
+                </div>
+
+                <!-- Teacher Card 2 -->
+                <div class="teacher-card">
+                    <div class="teacher-img">
+                        <img src="https://images.unsplash.com/photo-1579543169008-5d46f338779b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                            alt="Teacher">
+                    </div>
+                    <div class="teacher-info">
+                        <span class="teacher-style">Latin</span>
+                        <h3>Yulia Zagoruychenko</h3>
+                        <p>Leggenda delle danze latino americane, tecnica e passione.</p>
+                    </div>
+                </div>
+
+                <!-- Teacher Card 3 -->
+                <div class="teacher-card">
+                    <div class="teacher-img">
+                        <img src="https://images.unsplash.com/photo-1508807526345-15e9b5f4ea3b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                            alt="Teacher">
+                    </div>
+                    <div class="teacher-info">
+                        <span class="teacher-style">Modern</span>
+                        <h3>Mia Michaels</h3>
+                        <p>Coreografa di fama mondiale, espressione e movimento puro.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Packages Section -->
+    <section id="packages" class="section bg-dark">
+        <div class="container">
+            <div class="section-header text-center">
+                <p class="subtitle">Iscrizioni</p>
+                <h2 class="title">Scegli il Tuo Pacchetto</h2>
+                <p class="section-desc">Scarica il listino completo o prenota direttamente online tramite l'ingresso
+                    verificato.</p>
+                <div class="mt-2 text-center">
+                    <a href="#" class="btn btn-secondary" style="margin-bottom: 3rem;">
+                        <ion-icon name="download-outline"></ion-icon>
+                        Scarica PDF Pacchetti
+                    </a>
+                </div>
+            </div>
+
+            <div class="pricing-grid">
+                <!-- Package 1 -->
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Standard Pass</h3>
+                        <div class="price"><span>€</span>250</div>
+                        <p>Ideale per chi vuole vivere l'esperienza base del camp.</p>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><ion-icon name="checkmark-outline"></ion-icon> Accesso a 5 Group Lessons</li>
+                        <li><ion-icon name="checkmark-outline"></ion-icon> Accesso alle Lectures (2 gg)</li>
+                        <li><ion-icon name="close-outline" class="not-included"></ion-icon> <span
+                                class="text-inactive">Lezioni Private (Prenotabili)</span></li>
+                        <li><ion-icon name="close-outline" class="not-included"></ion-icon> <span
+                                class="text-inactive">Alloggio</span></li>
+                    </ul>
+                    <div class="pricing-footer" style="margin-top: auto;">
+                        <a href="entry-form.html" class="btn btn-outline w-100">Compila Entry Form</a>
+                    </div>
+                </div>
+
+                <!-- Package 2 -->
+                <div class="pricing-card featured">
+                    <div class="popular-badge">Più Scelto</div>
+                    <div class="pricing-header">
+                        <h3>Premium Pass</h3>
+                        <div class="price"><span>€</span>450</div>
+                        <p>L'esperienza completa con possibilità di prenotare i top coach.</p>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><ion-icon name="checkmark-outline"></ion-icon> Accesso a TUTTE le Group Lessons</li>
+                        <li><ion-icon name="checkmark-outline"></ion-icon> Accesso alle Lectures (Full)</li>
+                        <li><ion-icon name="checkmark-outline"></ion-icon> Priorità Prenotazione Lezioni Private</li>
+                        <li><ion-icon name="checkmark-outline"></ion-icon> Welcome Kit "Tuscany Camp"</li>
+                    </ul>
+                    <div class="pricing-footer" style="margin-top: auto;">
+                        <a href="entry-form.html" class="btn btn-primary w-100">Compila Entry Form</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pre-Footer Call to Action -->
+    <section class="cta-section">
+        <div class="cta-overlay"></div>
+        <div class="container text-center relative z-2">
+            <h2 class="title" style="font-size: 3rem;">Pronto a Ballare?</h2>
+            <p class="section-desc mx-auto" style="color: var(--text-light); margin-bottom: 2rem;">Compila l'Entry Form,
+                seleziona i tuoi pacchetti (inclusi extra e notti) e accedi al nostro Booking Online esclusivo per
+                prenotare le tue lezioni private.</p>
+            <a href="entry-form.html" class="btn btn-primary" style="font-size: 1.1rem; padding: 1rem 3rem;">Vai
+                all'Entry Form</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <span class="logo-text">Tuscany Camp</span>
+                <p>The premium dance experience in Italy. Workshop, private lessons, and more.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Link Rapidi</h4>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#programma">Programma</a></li>
+                    <li><a href="#teachers">Guest Teachers</a></li>
+                    <li><a href="#packages">Pacchetti</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Supporto</h4>
+                <ul>
+                    <li><a href="contatti.html">Contattaci</a></li>
+                    <li><a href="#">FAQ & Live Chat</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Tuscany Camp. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <!-- We will add Supabase later -->
+    <script src="script.js"></script>
+</body>
+
+</html>

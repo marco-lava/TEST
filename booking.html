@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Area - Tuscany Camp</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <style>
+        .booking-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: calc(var(--nav-height) + 4rem) 2rem 4rem 2rem;
+            min-height: calc(100vh - 100px);
+        }
+
+        .booking-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .booking-header h1 {
+            font-family: var(--font-heading);
+            color: var(--accent-gold);
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .booking-header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .card-panel {
+            background: rgba(20, 24, 30, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-glass-light);
+            border-radius: 16px;
+            padding: 3.5rem;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            transition: var(--transition-smooth);
+        }
+
+        .card-panel:hover {
+            border-color: rgba(212, 175, 55, 0.3);
+            box-shadow: 0 15px 50px rgba(212, 175, 55, 0.1);
+        }
+
+        .success-alert {
+            display: none;
+            background: rgba(46, 204, 113, 0.1);
+            border: 1px solid #2ecc71;
+            color: #2ecc71;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+
+        .success-alert a {
+            color: var(--text-light);
+            text-decoration: underline;
+            font-weight: 500;
+        }
+
+        .booking-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .booking-table th {
+            text-align: left;
+            padding: 1rem;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-glass);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+        }
+
+        .booking-table td {
+            padding: 1.2rem 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-light);
+        }
+
+        .status-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .status-badge.confirmed {
+            background: rgba(46, 204, 113, 0.2);
+            color: #2ecc71;
+        }
+
+        .total-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(20, 20, 20, 0.9), rgba(30, 25, 10, 0.9));
+            border: 1px solid var(--accent-gold);
+            border-radius: 12px;
+            margin-top: 2rem;
+        }
+
+        .total-box h3 {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            color: var(--text-light);
+        }
+
+        .total-box .price {
+            font-size: 3rem;
+            color: var(--accent-gold);
+            margin: 0;
+        }
+
+        /* Enhanced Form Styles - Identical to Profilo Custom Select */
+        .custom-select {
+            position: relative;
+            font-family: var(--font-body);
+            width: 100%;
+            z-index: 100;
+        }
+
+        .select-selected {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-light);
+            padding: 0.8rem 1.2rem;
+            border: 1px solid var(--border-glass);
+            border-radius: 50px;
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .select-selected:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: rgba(212, 175, 55, 0.5);
+        }
+
+        .select-selected.select-arrow-active {
+            border-radius: 20px 20px 0 0;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: var(--accent-gold);
+        }
+
+        .select-items {
+            position: absolute;
+            background-color: var(--bg-dark);
+            border: 1px solid var(--border-glass);
+            top: 100%;
+            left: 0;
+            right: 0;
+            z-index: 999;
+            border-radius: 0 0 20px 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            opacity: 0;
+            pointer-events: none;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(-10px);
+        }
+
+        .select-items.show {
+            opacity: 1;
+            pointer-events: auto;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .select-items div {
+            color: var(--text-muted);
+            padding: 0.8rem 1.2rem;
+            cursor: pointer;
+            user-select: none;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        .select-items div:last-child {
+            border-bottom: none;
+        }
+
+        .select-items div:hover,
+        .same-as-selected {
+            background-color: rgba(212, 175, 55, 0.1);
+            color: var(--accent-gold);
+        }
+
+        .booking-step-label {
+            display: inline-block;
+            color: var(--accent-gold);
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            letter-spacing: 0.5px;
+        }
+
+        .booking-step-label span {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid var(--accent-gold);
+            margin-right: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .card-panel {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Dynamic Navbar Container -->
+    <div id="nav-container"></div>
+
+    <div class="booking-container">
+
+        <div class="booking-header fade-in-up">
+            <h1>Prenota la tua Lezione</h1>
+            <p>Seleziona l'Insegnante, il Giorno e la Fascia Oraria desiderata. Il costo della lezione verrà elaborato
+                direttamente dal sistema di prenotazione integrato.</p>
+        </div>
+
+        <section class="card-panel fade-in-up delay-1">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem;">
+                <!-- Step 1 -->
+                <div style="position: relative; z-index: 3;">
+                    <label class="booking-step-label"><span>1</span> Insegnante</label>
+                    <div class="custom-select">
+                        <div class="select-selected">
+                            <span>-- Seleziona Insegnante --</span>
+                            <ion-icon name="chevron-down-outline"></ion-icon>
+                        </div>
+                        <div class="select-items">
+                            <div data-value="cocchi">Riccardo Cocchi</div>
+                            <div data-value="zagoruychenko">Yulia Zagoruychenko</div>
+                            <div data-value="bizokas">Arunas Bizokas</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div style="position: relative; z-index: 2;">
+                    <label class="booking-step-label"><span>2</span> Giorno</label>
+                    <div class="custom-select">
+                        <div class="select-selected">
+                            <span>-- Seleziona Data --</span>
+                            <ion-icon name="chevron-down-outline"></ion-icon>
+                        </div>
+                        <div class="select-items">
+                            <div data-value="15">15 Luglio 2026</div>
+                            <div data-value="16">16 Luglio 2026</div>
+                            <div data-value="17">17 Luglio 2026</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div style="position: relative; z-index: 1;">
+                    <label class="booking-step-label"><span>3</span> Orario</label>
+                    <div class="custom-select">
+                        <div class="select-selected">
+                            <span>-- Seleziona Orario --</span>
+                            <ion-icon name="chevron-down-outline"></ion-icon>
+                        </div>
+                        <div class="select-items">
+                            <div data-value="09:00">09:00 - 09:45</div>
+                            <div data-value="10:00">10:00 - 10:45</div>
+                            <div data-value="11:00">11:00 - 11:45</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 3rem;">
+                <button class="btn btn-primary btn-lg" style="width: 100%; max-width: 300px;"
+                    onclick="showBookingSuccess()">
+                    <ion-icon name="checkmark-circle-outline"></ion-icon> Conferma e Prenota
+                </button>
+            </div>
+
+            <!-- Success Message Notification -->
+            <div id="booking-success" class="success-alert fade-in-up">
+                <ion-icon name="checkmark-done-outline"
+                    style="font-size: 1.5rem; margin-bottom: 0.5rem;"></ion-icon><br>
+                <strong>Prenotazione aggiunta con successo!</strong><br>
+                <span style="font-size: 0.9rem; margin-top: 0.5rem; display: block;">Per visualizzare le lezioni
+                    prenotate visita il <a href="profilo.html">Tuo Profilo</a>.</span>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Check Authentication
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = localStorage.getItem('tc_user');
+            if (!user) {
+                // Not logged in -> Redirect to login page
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Booking Success Feedback
+        function showBookingSuccess() {
+            const alertBox = document.getElementById('booking-success');
+            alertBox.style.display = 'block';
+
+            // Re-trigger animation if needed
+            alertBox.style.animation = 'none';
+            alertBox.offsetHeight; /* trigger reflow */
+            alertBox.style.animation = null;
+        }
+
+        // Custom Select Logic (Identical to Profilo)
+        document.addEventListener('DOMContentLoaded', function () {
+            const customSelects = document.querySelectorAll('.custom-select');
+
+            customSelects.forEach(customSelect => {
+                const selectedBox = customSelect.querySelector('.select-selected');
+                const optionsBox = customSelect.querySelector('.select-items');
+                const options = optionsBox.querySelectorAll('div');
+
+                // Toggle dropdown
+                selectedBox.addEventListener('click', function (e) {
+                    e.stopPropagation();
+
+                    // Close others first
+                    document.querySelectorAll('.select-selected').forEach(el => {
+                        if (el !== this) {
+                            el.classList.remove('select-arrow-active');
+                            el.nextElementSibling.classList.remove('show');
+                            el.querySelector('ion-icon').setAttribute('name', 'chevron-down-outline');
+                        }
+                    });
+
+                    this.classList.toggle('select-arrow-active');
+                    optionsBox.classList.toggle('show');
+
+                    // Change icon
+                    const icon = this.querySelector('ion-icon');
+                    if (this.classList.contains('select-arrow-active')) {
+                        icon.setAttribute('name', 'chevron-up-outline');
+                    } else {
+                        icon.setAttribute('name', 'chevron-down-outline');
+                    }
+                });
+
+                // Option click
+                options.forEach(option => {
+                    option.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        e.preventDefault();
+
+                        // Update selected text
+                        selectedBox.querySelector('span').innerHTML = this.innerHTML;
+
+                        // Update active class
+                        options.forEach(opt => opt.classList.remove('same-as-selected'));
+                        this.classList.add('same-as-selected');
+
+                        // Close dropdown immediately
+                        selectedBox.classList.remove('select-arrow-active');
+                        optionsBox.classList.remove('show');
+                        selectedBox.querySelector('ion-icon').setAttribute('name', 'chevron-down-outline');
+                    });
+                });
+            });
+
+            // Close when clicking outside
+            document.addEventListener('click', function (e) {
+                document.querySelectorAll('.select-selected').forEach(el => {
+                    el.classList.remove('select-arrow-active');
+                    el.nextElementSibling.classList.remove('show');
+                    el.querySelector('ion-icon').setAttribute('name', 'chevron-down-outline');
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

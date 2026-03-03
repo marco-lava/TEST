@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contatti - Tuscany Camp</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <style>
+        .contact-section {
+            padding-top: 150px;
+            min-height: 100vh;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .contact-info h3 {
+            font-family: var(--font-heading);
+            color: var(--accent-gold);
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-item ion-icon {
+            font-size: 1.8rem;
+            color: var(--accent-gold);
+        }
+
+        .info-item p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        .info-item span {
+            display: block;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 0.2rem;
+        }
+
+        .contact-form {
+            background: var(--bg-surface);
+            padding: 3rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-glass);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 1rem;
+            background: var(--bg-darker);
+            border: 1px solid var(--border-glass);
+            color: var(--text-light);
+            border-radius: 4px;
+            font-family: var(--font-body);
+            font-size: 1rem;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+        }
+
+        .live-chat-bubble {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--accent-gold);
+            color: var(--bg-darker);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            z-index: 100;
+        }
+
+        .live-chat-bubble:hover {
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Dynamic Navbar Container -->
+    <div id="nav-container"></div>
+
+    <!-- Contact Section -->
+    <section class="contact-section bg-dark">
+        <div class="container">
+            <div class="section-header text-center">
+                <p class="subtitle">Siamo qui per te</p>
+                <h1 class="title" style="font-size: 3.5rem;">Contattaci</h1>
+                <p class="section-desc">Hai domande sui pacchetti, sui guest teacher o sulle lezioni private? Compila il
+                    form o usa la chat in tempo reale.</p>
+            </div>
+
+            <div class="contact-grid">
+                <!-- Info -->
+                <div class="contact-info fade-in-up">
+                    <h3>Informazioni Rapide</h3>
+                    <div class="info-item">
+                        <ion-icon name="location-outline"></ion-icon>
+                        <div>
+                            <p>Tuscany Dance Hub</p>
+                            <span>Via del Ballo 15, Firenze, FI, Italia</span>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <ion-icon name="mail-outline"></ion-icon>
+                        <div>
+                            <p>Email Ufficiale</p>
+                            <span>info@tuscanycamp.net</span>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <ion-icon name="call-outline"></ion-icon>
+                        <div>
+                            <p>Telefono & WhatsApp</p>
+                            <span>+39 333 123 4567</span>
+                        </div>
+                    </div>
+                    <div class="info-item" style="margin-top: 3rem;">
+                        <ion-icon name="chatbubbles-outline"></ion-icon>
+                        <div>
+                            <p>Live Chat</p>
+                            <span>Sempre attivi in basso a destra</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form -->
+                <div class="contact-form fade-in-up delay-1">
+                    <form onsubmit="event.preventDefault(); alert('Messaggio Inviato! Ti risponderemo o più presto.');">
+                        <div class="form-group">
+                            <input type="text" class="form-input" required placeholder="Il tuo Nome">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-input" required placeholder="La tua Email">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-input" placeholder="Oggetto (Opzionale)">
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-textarea" required placeholder="Come possiamo aiutarti?"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Invia Messaggio</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Chat Mock Component -->
+    <div class="live-chat-bubble"
+        onclick="alert('Demo Live Chat: Qui attiveremo il widget di Tawk.to o di un altro servizio di chat in tempo reale.')">
+        <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <span class="logo-text">Tuscany Camp</span>
+                <p>The premium dance experience in Italy.</p>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Tuscany Camp. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
