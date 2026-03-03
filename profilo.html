@@ -370,8 +370,14 @@
 
         @media (max-width: 768px) {
             .profile-grid {
-                grid-template-columns: 1fr;
+                display: flex;
+                flex-direction: column;
                 gap: 2rem;
+            }
+
+            .profile-sidebar,
+            .profile-main {
+                width: 100%;
             }
 
             .profile-header {
@@ -383,6 +389,7 @@
             .profile-header div[style*="margin-left: auto"] {
                 margin-left: 0 !important;
                 justify-content: center;
+                flex-wrap: wrap;
             }
 
             .info-group {
@@ -395,15 +402,32 @@
             }
 
             .profile-tabs {
+                display: flex;
                 justify-content: flex-start;
                 padding-bottom: 8px;
                 /* For scrollbar */
                 width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
             }
 
             .profile-tabs button {
                 font-size: 0.9rem;
                 padding: 0.5rem 1rem;
+                flex: 0 0 auto;
+                /* Prevent buttons from shrinking */
+            }
+
+            /* Give avvisi header breathing room */
+            #tab-avvisi>div:first-child {
+                flex-direction: column;
+                align-items: flex-start !important;
+                gap: 1rem;
+            }
+
+            #customAvvisiFilter {
+                width: 100%;
+                /* Make select full width on mobile */
             }
         }
     </style>
